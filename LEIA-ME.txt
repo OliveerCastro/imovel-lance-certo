@@ -1,0 +1,37 @@
+=====================================================
+          🏠 LEILÕES FÁCEIS — Projeto Completo
+=====================================================
+
+✅ O QUE VOCÊ PRECISA TER INSTALADO:
+   - Python 3 (já vem na maioria dos computadores)
+
+📁 ESTRUTURA DO PROJETO:
+   leiloes_facil/
+   ├── servidor.py       ← Execute este arquivo!
+   ├── index.html        ← Página inicial
+   ├── imoveis.html      ← Lista de imóveis + gráficos
+   ├── aprenda.html      ← Glossário interativo
+   ├── calculadora.html  ← Calculadora de custos
+   ├── estilo.css        ← Cores e estilos (azul)
+   └── LEIA-ME.txt       ← Este arquivo
+
+🚀 COMO RODAR:
+   1. Abra a pasta do projeto no terminal
+   2. Digite: python servidor.py
+   3. Abra no navegador: http://localhost:8000
+   4. Para parar: pressione Ctrl+C
+
+💡 DICAS:
+   - Funciona em qualquer computador
+   - Não precisa de internet para rodar
+   - Para acessar do celular, use seu IP local
+   - Todos os códigos são simples e fáceis de editar
+
+📝 PRÓXIMAS MELHORIAS QUE PODEMOS ADICIONAR:
+   - Sistema de cadastro/login
+   - Banco de dados com imóveis reais
+   - Notificações por e-mail/WhatsApp
+   - Favoritos e alertas de preço
+   - Simulador de financiamento
+   - Página de detalhes de cada imóvel
+=====================================================

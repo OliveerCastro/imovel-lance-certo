@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minha Conta — Leilões Fáceis</title>
+    <link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+
+<header class="cabecalho">
+    <nav class="navegacao">
+        <div class="logo">🏠 Leilões Fáceis</div>
+        <div class="menu">
+            <a href="index.html">Início</a>
+            <a href="imoveis.html">Imóveis</a>
+            <a href="aprenda.html">Aprenda</a>
+            <a href="calculadora.html">Calculadora</a>
+            <a href="area_usuario.html" class="ativo">Minha Conta</a>
+        </div>
+    </nav>
+</header>
+
+<main class="conteudo">
+    <div class="linha-sair">
+        <a href="/sair" class="botao botao-secundario" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Sair ↪</a>
+    </div>
+
+    <div id="mensagens">
+        <!-- Mensagens automáticas -->
+    </div>
+
+    <div class="cartao-destaque">
+        <h2 style="font-size: 1.8rem; margin-bottom: 0.5rem;">👋 Bem-vindo(a), <span id="nome_usuario">...</span>!</h2>
+        <p style="opacity: 0.9;">Aqui você acompanha tudo o que interessa para você</p>
+    </div>
+
+    <!-- Dados da Conta -->
+    <div class="secao">
+        <h3 class="secao-titulo" style="font-size: 1.4rem; text-align: left;">📋 Dados da Conta</h3>
+        <div class="cartao" style="max-width: 500px;">
+            <p><strong>Nome:</strong> <span id="dados_nome">Carregando...</span></p>
+            <p><strong>E-mail:</strong> <span id="dados_email">Carregando...</span></p>
+            <p style="margin-top: 1rem;">
+                <button class="botao botao-secundario" style="font-size: 0.9rem;">Alterar Senha</button>
+            </p>
+        </div>
+    </div>
+
+    <!-- Favoritos -->
+    <div class="secao">
+        <h3 class="secao-titulo" style="font-size: 1.4rem; text-align: left;">⭐ Meus Favoritos</h3>
+        <div id="lista_favoritos" class="grid">
+            <p style="color: #64748b; grid-column: 1 / -1;">Carregando...</p>
+        </div>
+    </div>
+
+    <!-- Alertas -->
+    <div class="secao">
+        <h3 class="secao-tit

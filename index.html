@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imóvel Lance Certo — Encontre seu imóvel com segurança</title>
+    <link rel="stylesheet" href="estilo.css">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: #f8fafc; color: #1e293b; line-height: 1.6; }
+
+        .hero {
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+        .hero h1 { font-size: 2.5rem; margin-bottom: 1rem; }
+        .hero p { font-size: 1.2rem; max-width: 700px; margin: 0 auto 2rem; opacity: 0.9; }
+        .botoes-hero {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .btn-primario {
+            background: white;
+            color: #1e40af;
+            padding: 0.85rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: transform 0.2s;
+        }
+        .btn-primario:hover { transform: translateY(-2px); }
+        .btn-secundario {
+            background: transparent;
+            color: white;
+            padding: 0.85rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            border: 2px solid rgba(255,255,255,0.3);
+            transition: background 0.2s;
+        }
+        .btn-secundario:hover { background: rgba(255,255,255,0.1); }
+
+        .secao { padding: 4rem 2rem; max-width: 1200px; margin: 0 auto; }
+        .secao h2 { text-align: center; color: #1e40af; font-size: 2rem; margin-bottom: 3rem; }
+
+        .grade {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+        .cartao {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+        .cartao .icone { font-size: 2.5rem; margin-bottom: 1rem; }
+        .cartao h3 { color: #1e40af; margin-bottom: 0.5rem; }
+        .cartao p { color: #64748b; font-size: 0.95rem; }
+
+        .destaque { background: #eff6ff; }
+        .destaque p { text-align: center; max-width: 700px; margin: 0 auto; color: #1e40af; font-size: 1.1rem; }
+
+        footer {
+            background: #1e293b;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            font-size: 0.9rem;
+        }
+
+        /* 📱 Celular também em 2 colunas */
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 1.8rem; }
+            .grade { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+            .cartao { padding: 1.25rem; }
+            .cartao .icone { font-size: 2rem; }
+            .secao { padding: 2rem 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+<nav id="menu-principal">
+    <a href="/">🏠 Imóvel Lance Certo</a>
+    <a href="/imoveis.html">📋 Imóveis</a>
+    <a href="/calculadora.html">🧮 Calculadora</a>
+    <a href="/aprenda.html">📚 Aprenda</a>
+    <a href="/duvidas.html">❓ Dúvidas</a>
+    <a href="/fontes.html">🔗 Fontes</a>
+    <span id="menu-logado" style="display: none;">
+        <a href="/perfil.html" style="margin-left: auto;">👤 Meu Perfil</a>
+        <a href="#" onclick="sairDaConta(event)" style="color: #ef4444;">🚪 Sair</a>
+    </span>
+    <span id="menu-deslogado">
+        <a href="/login.html" style="margin-left: auto;">🔑 Entrar / Criar Conta</a>
+    </span>
+</nav>
+
+<script>
+// Verifica se o usuário está logado e mostra os botões corretos
+function atualizarMenu() {
+    const logado = localStorage.getItem('imc_logado');
+    document.getElementById('menu-logado').style.display = logado ? 'contents' : 'none';
+    document.getElementById('menu-deslogado').style.display = logado ? 'none' : 'contents';
+}
+
+// Função de logout
+function sairDaConta(e) {
+    e.preventDefault();
+    if (confirm('Tem certeza que deseja sair?')) {
+        localStorage.removeItem('imc_logado');
+        localStorage.removeItem('imc_novidades');
+        window.location.href = '/login.html';
+    }
+}
+
+// Atualiza o menu assim que a página carrega
+document.addEventListener('DOMContentLoaded', atualizarMenu);
+</script>
+
+
+<script>
+function sairDaConta(e) {
+    e.preventDefault();
+    if (confirm('Tem certeza que deseja sair?')) {
+        localStorage.removeItem('imc_logado');
+        window.location.href = '/login.html';
+    }
+}
+</script>
+
+
+<section class="hero">
+    <h1>🏠 Imóvel Lance Certo</h1>
+    <p>Seu guia transparente para encontrar imóveis em leilão com segurança e economia. Sem complicação, feito para você!</p>
+    <div class="botoes-hero">
+        <a href="/imoveis.html" class="btn-primario">Ver Imóveis Disponíveis →</a>
+        <a href="/aprenda.html" class="btn-secundario">Saiba como funciona</a>
+    </div>
+</section>
+
+<section class="secao">
+    <h2>💡 Por que usar o Imóvel Lance Certo?</h2>
+    <div class="grade">
+        <div class="cartao">
+            <div class="icone">💰</div>
+            <h3>Grandes Descontos</h3>
+            <p>Imóveis que podem chegar a até 50% abaixo do valor de mercado.</p>
+        </div>
+        <div class="cartao">
+            <div class="icone">📚</div>
+            <h3>Explicação Simples</h3>
+            <p>Termos difíceis explicados de forma fácil, sem jargões jurídicos.</p>
+        </div>
+        <div class="cartao">
+            <div class="icone">🧮</div>
+            <h3>Calculadora Real</h3>
+            <p>Descubra o custo total: lance + taxas + ITBI + dívidas.</p>
+        </div>
+        <div class="cartao">
+            <div class="icone">🔒</div>
+            <h3>Fontes Oficiais</h3>
+            <p>Links diretos para Caixa, bancos e tribunais. Confira sempre na fonte!</p>
+        </div>
+    </div>
+</section>
+
+<section class="secao destaque">
+    <h2>🎯 Transparência total para você</h2>
+    <p>O Imóvel Lance Certo é um espaço organizado onde você encontra, compara e acompanha os melhores imóveis de leilão do Brasil. Não vendemos imóveis — conectamos você às fontes oficiais com clareza e segurança.</p>
+</section>
+
+<footer>
+    <p>🏠 Imóvel Lance Certo — Transparência total para você encontrar seu imóvel</p>
+    <p>© 2026 — Todos os direitos reservados | Não somos instituição financeira, apenas guia informativo</p>
+</footer>
+
+</body>
+</html>

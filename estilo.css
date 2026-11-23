@@ -1,0 +1,112 @@
+/* ===== ESTILO GLOBAL COMPARTILHADO ===== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
+
+body {
+    background: #f8fafc;
+    color: #1e293b;
+    line-height: 1.6;
+}
+
+/* ===== NAVEGAÇÃO ===== */
+nav {
+    background: white;
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+nav a {
+    margin: 0 0.8rem;
+    text-decoration: none;
+    color: #475569;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+nav a:hover {
+    color: #3b82f6;
+}
+
+nav a.ativo {
+    color: #3b82f6;
+    font-weight: 600;
+}
+
+/* ===== CONTAINER PADRÃO ===== */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+/* ===== BOTÕES ===== */
+.botao {
+    display: inline-block;
+    padding: 0.875rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.botao:hover {
+    transform: translateY(-2px);
+}
+
+.botao-principal {
+    background: #3b82f6;
+    color: white;
+}
+
+.botao-principal:hover {
+    background: #1e40af;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.botao-secundario {
+    background: #e2e8f0;
+    color: #334155;
+}
+
+.botao-secundario:hover {
+    background: #cbd5e1;
+}
+
+/* ===== RESPONSIVIDADE — CELULAR ===== */
+@media (max-width: 768px) {
+    nav {
+        padding: 1rem;
+        text-align: center;
+    }
+
+    nav a {
+        display: inline-block;
+        margin: 0.3rem 0.5rem;
+        font-size: 0.9rem;
+    }
+
+    .container {
+        padding: 0 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    nav {
+        padding: 0.75rem;
+    }
+
+    nav a {
+        margin: 0.2rem 0.3rem;
+        font-size: 0.85rem;
+    }
+}

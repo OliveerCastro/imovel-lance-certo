@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Custos — Leilões Fáceis</title>
+    <link rel="stylesheet" href="estilo.css">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        body { background: #f8fafc; color: #1e293b; }
+        nav { background: white; padding: 1rem 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.08); position: sticky; top: 0; z-index: 100; }
+        nav a { margin: 0 0.8rem; text-decoration: none; color: #475569; font-weight: 500; }
+        nav a.ativo { color: #3b82f6; font-weight: 600; }
+        .container { max-width: 800px; margin: 0 auto; padding: 2rem; }
+        h1 { text-align: center; color: #1e40af; margin-bottom: 2rem; }
+        .card { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin-bottom: 1.5rem; }
+        h2 { color: #1e40af; font-size: 1.2rem; margin-bottom: 1.5rem; }
+        .grupo { margin-bottom: 1.25rem; }
+        label { display: block; font-weight: 500; margin-bottom: 0.5rem; color: #334155; }
+        input, select { width: 100%; padding: 0.75rem; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 1rem; }
+        input:focus, select:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,0.1); }
+        .linha { display: flex; gap: 1rem; flex-wrap: wrap; }
+        .linha > div { flex: 1; min-width: 200px; }
+        .botao { background: #3b82f6; color: white; border: none; padding: 0.875rem 1.5rem; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; width: 100%; margin-top: 0.5rem; }
+        .botao:hover { background: #1e40af; }
+        .resultado { background: #eff6ff; border-radius: 10px; padding: 1.5rem; margin-top: 1.5rem; display: none; }
+        .resultado.visivel { display: block; }
+        .linha-total { display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid #bfdbfe; }
+        .linha-total:last-child { border-bottom: none; font-size: 1.1rem; font-weight: 700; color: #1e40af; margin-top: 0.5rem; }
+        .dica { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 1rem; border-radius: 6px; margin-top: 1.5rem; font-size: 0.9rem; line-height: 1.6; }
+        .dica strong { color: #92400e; }
+        .taxa-valor { text-align: right; font-weight: 600; color: #475569; }
+    </style>
+
+    <!-- Ícones Google Fonts -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+</head>
+<body>
+
+<nav id="menu-principal">
+    <a href="/">🏠 Imóvel Lance Certo</a>
+    <a href="/imoveis.html">📋 Imóveis</a>
+    <a href="/calculadora.html">🧮 Calculadora</a>
+    <a href="/aprenda.html">📚 Aprenda</a>
+    <a href="/duvidas.html">❓ Dúvidas</a>
+    <a href="/fontes.html">🔗 Fontes</a>
+    <span id="menu-logado" style="display: none;">
+        <a href="/perfil.html" style="margin-left: auto;">👤 Meu Perfil</a>
+        <a href="#" onclick="sairDaConta(event)" style="color: #ef4444;">🚪 Sair</a>
+    </span>
+    <span id="menu-deslogado">
+        <a href="/login.html" style="margin-left: auto;">🔑 Entrar / Criar Conta</a>
+    </span>
+</nav>
+
+<script>
+// Verifica se o usuário está logado e mostra os botões corretos
+function atualizarMenu() {
+    const logado = localStorage.getItem('imc_logado');
+    document.getElementById('menu-logado').style.display = logado ? 'contents' : 'none';
+    document.getElementById('menu-deslogado').style.display = logado ? 'none' : 'contents';
+}
+
+// Função de logout
+function sairDaConta(e) {
+    e.preventDefault();
+    if (confirm('Tem certeza que deseja sair?')) {
+        localStorage.removeItem('imc_logado');
+        localStorage.removeItem('imc_novidades');
+        window.location.href = '/login.html';
+    }
+}
+
+// Atualiza o menu assim que a página carrega
+document.addEventListener('DOMContentLoaded', atualizarMenu);
+</script>
+
+
+<script>
+function sairDaConta(e) {
+    e.preventDefault();
+    if (confirm('Tem certeza que deseja sair?')) {
+        localStorage.removeItem('imc_logado');
+        window.location.href = '/login.html';
+    }
+}
+</script>
+
+
+<div class="container">
+    <h1>🧮 Calculadora de Custos — Leilões</h1>
+
+    <div class="card">
+        <h2>💰 Valor do Lance</h2>
+        <div class="grupo">
+            <label for="valor_lance">Valor do seu lance (R$)</label>
+            <input type="number" id="valor_lance" placeholder="Ex: 180000" oninput="calcular()">
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>📊 Taxas e Impostos</h2>
+
+        <div class="linha">
+            <div class="grupo">
+                <label for="comissao_leiloeiro">Comissão do Leiloeiro (%)</label>
+                <input type="number" id="comissao_leiloeiro" value="5" oninput="calcular()">
+                <p style="font-size:0.8rem; color:#64748b; margin-top:0.25rem;">Geralmente entre 3% e 5%</p>
+            </div>
+            <div class="grupo">
+                <label for="itbi">ITBI (%)</label>
+                <input type="number" id="itbi" value="2" oninput="calcular()">
+                <p style="font-size:0.8rem; color:#64748b; margin-top:0.25rem;">Imposto municipal</p>
+            </div>
+        </div>
+
+        <div class="linha">
+            <div class="grupo">
+                <label for="registro">Registro em Cartório (R$)</label>
+                <input type="number" id="registro" value="1500" oninput="calcular()">
+                <p style="font-size:0.8rem; color:#64748b; margin-top:0.25rem;">Valor médio estimado</p>
+            </div>
+            <div class="grupo">
+                <label for="dividas">Dívidas Anteriores (R$)</label>
+                <input type="number" id="dividas" value="0" oninput="calcular()">
+                <p style="font-size:0.8rem; color:#64748b; margin-top:0.25rem;">Confira no edital!</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="card resultado" id="caixa_resultado">
+        <h2>📋 Resumo dos Custos</h2>
+
+        <div class="linha-total">
+            <span>Valor do Lance</span>
+            <span id="resumo_lance">R$ 0,00</span>
+        </div>
+        <div class="linha-total">
+            <span>Comissão do Leiloeiro</span>
+            <span id="resumo_leiloeiro">R$ 0,00</span>
+        </div>
+        <div class="linha-total">
+            <span>ITBI</span>
+            <span id="resumo_itbi">R$ 0,00</span>
+        </div>
+        <div class="linha-total">
+            <span>Registro em Cartório</span>
+            <span id="resumo_registro">R$ 0,00</span>
+        </div>
+        <div class="linha-total">
+            <span>Dívidas Anteriores</span>
+            <span id="resumo_dividas">R$ 0,00</span>
+        </div>
+        <div class="linha-total">
+            <span>💵 TOTAL A PAGAR</span>
+            <span id="resumo_total">R$ 0,00</span>
+        </div>
+
+        <div class="dica">
+            <strong>💡 Bom saber:</strong> O valor total pode ficar de <strong>6% a 12%</strong> acima do valor do lance. Sempre calcule tudo antes de dar o seu lance! Confira no edital se há dívidas ou taxas adicionais.
+        </div>
+    </div>
+</div>
+
+<script>
+function formatarReal(valor) {
+    return new Intl.NumberFormat('pt-BR', {
+        style: 'currency',
+        currency: 'BRL'
+    }).format(valor);
+}
+
+function calcular() {
+    const lance = parseFloat(document.getElementById('valor_lance').value) || 0;
+    const taxaLeiloeiro = parseFloat(document.getElementById('comissao_leiloeiro').value) || 0;
+    const taxaITBI = parseFloat(document.getElementById('itbi').value) || 0;
+    const registro = parseFloat(document.getElementById('registro').value) || 0;
+    const dividas = parseFloat(document.getElementById('dividas').value) || 0;
+
+    if (lance === 0) {
+        document.getElementById('caixa_resultado').classList.remove('visivel');
+        return;
+    }
+
+    const valorLeiloeiro = lance * (taxaLeiloeiro / 100);
+    const valorITBI = lance * (taxaITBI / 100);
+    const total = lance + valorLeiloeiro + valorITBI + registro + dividas;
+
+    document.getElementById('resumo_lance').textContent = formatarReal(lance);
+    document.getElementById('resumo_leiloeiro').textContent = formatarReal(valorLeiloeiro);
+    document.getElementById('resumo_itbi').textContent = formatarReal(valorITBI);
+    document.getElementById('resumo_registro').textContent = formatarReal(registro);
+    document.getElementById('resumo_dividas').textContent = formatarReal(dividas);
+    document.getElementById('resumo_total').textContent = formatarReal(total);
+
+    document.getElementById('caixa_resultado').classList.add('visivel');
+}
+</script>
+
+</body>
+</html>

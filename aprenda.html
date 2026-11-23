@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aprenda — Imóvel Lance Certo</title>
+    <link rel="stylesheet" href="estilo.css">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: #f8fafc; color: #1e293b; line-height: 1.7; }
+
+        .container { max-width: 900px; margin: 0 auto; padding: 2rem; }
+        h1 { text-align: center; color: #1e40af; font-size: 2rem; margin-bottom: 0.5rem; }
+        .subtitulo { text-align: center; color: #64748b; margin-bottom: 3rem; }
+
+        .passo {
+            background: white;
+            padding: 1.75rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        .passo h2 {
+            color: #1e40af;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .numero-passo {
+            background: #3b82f6;
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+        .passo p { color: #475569; margin-bottom: 0.75rem; font-size: 0.95rem; }
+        .passo ul { padding-left: 1.5rem; margin-bottom: 0.75rem; }
+        .passo li { color: #475569; margin-bottom: 0.5rem; font-size: 0.95rem; }
+
+        .caixa-dica {
+            background: #fef9c3;
+            border-left: 4px solid #eab308;
+            padding: 1rem 1.25rem;
+            border-radius: 6px;
+            margin: 1rem 0;
+        }
+        .caixa-dica h4 { color: #854d0e; margin-bottom: 0.5rem; }
+        .caixa-dica p { color: #713f12; font-size: 0.9rem; margin: 0; }
+
+        .caixa-atencao {
+            background: #fee2e2;
+            border-left: 4px solid #ef4444;
+            padding: 1rem 1.25rem;
+            border-radius: 6px;
+            margin: 1rem 0;
+        }
+        .caixa-atencao h4 { color: #991b1b; margin-bottom: 0.5rem; }
+        .caixa-atencao p { color: #7f1d1d; font-size: 0.9rem; margin: 0; }
+
+        .resumo {
+            background: #eff6ff;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-top: 2rem;
+        }
+        .resumo h3 { color: #1e40af; margin-bottom: 1rem; text-align: center; }
+        .resumo ul { list-style: none; padding: 0; }
+        .resumo li { padding: 0.5rem 0; border-bottom: 1px solid #bfdbfe; color: #1e3a8a; font-size: 0.95rem; }
+        .resumo li:last-child { border-bottom: none; }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: #64748b;
+            font-size: 0.9rem;
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+
+<nav id="menu-principal">
+    <a href="/">🏠 Imóvel Lance Certo</a>
+    <a href="/imoveis.html">📋 Imóveis</a>
+    <a href="/calculadora.html">🧮 Calculadora</a>
+    <a href="/aprenda.html">📚 Aprenda</a>
+    <a href="/duvidas.html">❓ Dúvidas</a>
+    <a href="/fontes.html">🔗 Fontes</a>
+    <span id="menu-logado" style="display: none;">
+        <a href="/perfil.html" style="margin-left: auto;">👤 Meu Perfil</a>
+        <a href="#" onclick="sairDaConta(event)" style="color: #ef4444;">🚪 Sair</a>
+    </span>
+    <span id="menu-deslogado">
+        <a href="/login.html" style="margin-left: auto;">🔑 Entrar / Criar Conta</a>
+    </span>
+</nav>
+
+<script>
+// Verifica se o usuário está logado e mostra os botões corretos
+function atualizarMenu() {
+    const logado = localStorage.getItem('imc_logado');
+    document.getElementById('menu-logado').style.display = logado ? 'contents' : 'none';
+    document.getElementById('menu-deslogado').style.display = logado ? 'none' : 'contents';
+}
+
+// Função de logout
+function sairDaConta(e) {
+    e.preventDefault();
+    if (confirm('Tem certeza que deseja sair?')) {
+        localStorage.removeItem('imc_logado');
+        localStorage.removeItem('imc_novidades');
+        window.location.href = '/login.html';
+    }
+}
+
+// Atualiza o menu assim que a página carrega
+document.addEventListener('DOMContentLoaded', atualizarMenu);
+</script>
+
+
+<div class="container">
+    <h1>📚 Como Funciona um Leilão de Imóveis</h1>
+    <p class="subtitulo">Guia passo a passo para você comprar com segurança e confiança</p>
+
+    <!-- PASSO 1 -->
+    <div class="passo">
+        <h2><span class="numero-passo">1</span> Entenda como funciona</h2>
+        <p>Um leilão de imóveis acontece quando um banco ou a Justiça precisa vender um imóvel para recuperar um empréstimo que não foi pago. Por isso, os preços costumam ser bem mais baixos do que no mercado tradicional — às vezes até 50% mais barato!</p>
+
+        <div class="caixa-atencao">
+            <h4>⚠️ Atenção</h4>
+            <p>Preço baixo não é a única coisa que importa. Existem custos extras e detalhes que você precisa saber antes de participar.</p>
+        </div>
+    </div>
+
+    <!-- PASSO 2 -->
+    <div class="passo">
+        <h2><span class="numero-passo">2</span> Escolha o tipo de leilão</h2>
+        <p>Existem dois tipos principais de leilões:</p>
+        <ul>
+            <li><strong>Leilão Extrajudicial (Bancos):</strong> Organizado pelo próprio banco. Geralmente é mais simples, aceita financiamento e o imóvel costuma estar desocupado.</li>
+            <li><strong>Leilão Judicial (Justiça):</strong> Determinado por um juiz. Exige mais cuidado. Pode estar ocupado e quase sempre exige pagamento à vista.</li>
+        </ul>
+    </div>
+
+    <!-- PASSO 3 -->
+    <div class="passo">
+        <h2><span class="numero-passo">3</span> Leia o edital com atenção</h2>
+        <p>O edital é o documento mais importante. Ele contém todas as regras e informações sobre o imóvel. Nunca participe sem ler!</p>
+
+        <div class="caixa-dica">
+            <h4>📋 O que verificar no edital:</h4>
+            <p>Valor mínimo, data do leilão, forma de pagamento, estado de conservação, se está ocupado, existência de dívidas e comissões.</p>
+        </div>
+    </div>
+
+    <!-- PASSO 4 -->
+    <div class="passo">
+        <h2><span class="numero-passo">4</span> Visite o imóvel se possível</h2>
+        <p>Não compre apenas pela foto. Se puder, vá até o local e veja com seus próprios olhos. Confira o estado de conservação e se tem alguém morando lá.</p>
+
+        <div class="caixa-atencao">
+            <h4>🏠 Imóvel ocupado = cuidado redobrado!</h4>
+            <p>Se o imóvel estiver ocupado, você pode precisar de uma ação judicial para tomar posse. Isso pode demorar meses ou até anos. Prefira sempre imóveis desocupados quando for iniciante.</p>
+        </div>
+    </div>
+
+    <!-- PASSO 5 -->
+    <div class="passo">
+        <h2><span class="numero-passo">5</span> Calcule o valor total</h2>
+        <p>O valor do lance não é o único custo. Sempre calcule tudo antes de decidir:</p>
+        <ul>
+            <li>✅ Valor do seu lance</li>
+            <li>✅ ITBI (imposto municipal — 2% a 3%)</li>
+            <li>✅ Comissão do leiloeiro (em média 5%)</li>
+            <li>✅ Registro no cartório</li>
+            <li>✅ Possíveis dívidas anteriores (IPTU, condomínio)</li>
+        </ul>
+
+        <div class="caixa-dica">
+            <h4>🧮 Dica</h4>
+            <p>Use nossa <a href="/calculadora.html" style="color:#3b82f6; font-weight:500;">Calculadora de Custos</a> para estimar o valor total de forma rápida e fácil!</p>
+        </div>
+    </div>
+
+    <!-- PASSO 6 -->
+    <div class="passo">
+        <h2><span class="numero-passo">6</span> Faça seu lance com estratégia</h2>
+        <p>Quando sentir que está pronto, faça seu lance. Comece com valores menores e vá aumentando com calma. Não se deixe levar pela emoção do momento!</p>
+        <ul>
+            <li>Defina seu valor máximo ANTES de começar</li>
+            <li>Não ultrapasse esse valor, por mais que queira o imóvel</li>
+            <li>Se alguém oferecer mais, respeite seu limite — sempre aparecerá outra oportunidade</li>
+        </ul>
+    </div>
+
+    <!-- RESUMO -->
+    <div class="resumo">
+        <h3>✅ Resumo — Regras de Ouro</h3>
+        <ul>
+            <li>📖 Sempre leia o edital completo</li>
+            <li>🏘️ Prefira imóveis desocupados</li>
+            <li>💰 Calcule TODOS os custos, não só o lance</li>
+            <li>🎯 Defina seu limite e não o ultrapasse</li>
+            <li>🔗 Confira sempre no site oficial do leilão</li>
+        </ul>
+    </div>
+</div>
+
+<footer>
+    🏠 Imóvel Lance Certo — Transparência total para você encontrar seu imóvel<br>
+    © 2026 — Todos os direitos reservados | Não somos instituição financeira, apenas guia informativo
+</footer>
+
+</body>
+</html>

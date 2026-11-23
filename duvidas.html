@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dúvidas Frequentes — Imóvel Lance Certo</title>
+    <link rel="stylesheet" href="estilo.css">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: #f8fafc; color: #1e293b; line-height: 1.6; }
+
+        .container { max-width: 800px; margin: 0 auto; padding: 2rem; }
+        h1 { text-align: center; color: #1e40af; font-size: 2rem; margin-bottom: 0.5rem; }
+        .subtitulo { text-align: center; color: #64748b; margin-bottom: 3rem; }
+
+        .duvida {
+            background: white;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+            overflow: hidden;
+        }
+        .pergunta {
+            padding: 1.25rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 500;
+            color: #1e40af;
+            transition: background 0.2s;
+        }
+        .pergunta:hover { background: #eff6ff; }
+        .icone-seta {
+            transition: transform 0.3s ease;
+            font-size: 0.8rem;
+        }
+        .resposta {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+        .resposta.aberta {
+            max-height: 500px;
+            padding: 0 1.25rem 1.25rem;
+        }
+        .resposta p {
+            color: #475569;
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+        .resposta ul {
+            margin: 0.75rem 0;
+            padding-left: 1.5rem;
+        }
+        .resposta li {
+            color: #475569;
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: #64748b;
+            font-size: 0.9rem;
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+
+<nav id="menu-principal">
+    <a href="/">🏠 Imóvel Lance Certo</a>
+    <a href="/imoveis.html">📋 Imóveis</a>
+    <a href="/calculadora.html">🧮 Calculadora</a>
+    <a href="/aprenda.html">📚 Aprenda</a>
+    <a href="/duvidas.html">❓ Dúvidas</a>
+    <a href="/fontes.html">🔗 Fontes</a>
+    <span id="menu-logado" style="display: none;">
+        <a href="/perfil.html" style="margin-left: auto;">👤 Meu Perfil</a>
+        <a href="#" onclick="sairDaConta(event)" style="color: #ef4444;">🚪 Sair</a>
+    </span>
+    <span id="menu-deslogado">
+        <a href="/login.html" style="margin-left: auto;">🔑 Entrar / Criar Conta</a>
+    </span>
+</nav>
+
+<script>
+// Verifica se o usuário está logado e mostra os botões corretos
+function atualizarMenu() {
+    const logado = localStorage.getItem('imc_logado');
+    document.getElementById('menu-logado').style.display = logado ? 'contents' : 'none';
+    document.getElementById('menu-deslogado').style.display = logado ? 'none' : 'contents';
+}
+
+// Função de logout
+function sairDaConta(e) {
+    e.preventDefault();
+    if (confirm('Tem certeza que deseja sair?')) {
+        localStorage.removeItem('imc_logado');
+        localStorage.removeItem('imc_novidades');
+        window.location.href = '/login.html';
+    }
+}
+
+// Atualiza o menu assim que a página carrega
+document.addEventListener('DOMContentLoaded', atualizarMenu);
+</script>
+
+
+<script>
+function sairDaConta(e) {
+    e.preventDefault();
+    if (confirm('Tem certeza que deseja sair?')) {
+        localStorage.removeItem('imc_logado');
+        window.location.href = '/login.html';
+    }
+}
+</script>
+
+
+<div class="container">
+    <h1>❓ Dúvidas Frequentes</h1>
+    <p class="subtitulo">Respostas para as perguntas mais comuns sobre leilões de imóveis</p>
+
+    <!-- DÚVIDA 1 -->
+    <div class="duvida">
+        <div class="pergunta" onclick="alternarResposta(this)">
+            <span>🏠 O que é um imóvel de leilão?</span>
+            <span class="icone-seta">▼</span>
+        </div>
+        <div class="resposta">
+            <p>É um imóvel vendido em leilão público, geralmente porque o proprietário não conseguiu pagar o empréstimo ou por determinação judicial. Bancos e tribunais vendem esses imóveis para recuperar o dinheiro emprestado, por isso os preços costumam ser bem mais baixos do que no mercado comum.</p>
+        </div>
+    </div>
+
+    <!-- DÚVIDA 2 -->
+    <div class="duvida">
+        <div class="pergunta" onclick="alternarResposta(this)">
+            <span>💰 Quais são os custos além do valor do lance?</span>
+            <span class="icone-seta">▼</span>
+        </div>
+        <div class="resposta">
+            <p>Muitas pessoas esquecem esses custos e levam um susto! Fique atento:</p>
+            <ul>
+                <li><strong>ITBI:</strong> Imposto municipal sobre transmissão de bens — geralmente entre 2% e 3% do valor</li>
+                <li><strong>Comissão do leiloeiro:</strong> Em média 5% do valor do lance</li>
+                <li><strong>Registro de imóvel:</strong> Taxas cartoriais</li>
+                <li><strong>Dívidas anteriores:</strong> Confira sempre se o imóvel tem dívidas de IPTU ou condomínio — você pode herdar elas!</li>
+            </ul>
+            <p>💡 Use nossa <a href="/calculadora.html" style="color:#3b82f6;">Calculadora de Custos</a> para estimar o valor total.</p>
+        </div>
+    </div>
+
+    <!-- DÚVIDA 3 -->
+    <div class="duvida">
+        <div class="pergunta" onclick="alternarResposta(this)">
+            <span>⚠️ Tem risco de comprar e não conseguir tomar posse?</span>
+            <span class="icone-seta">▼</span>
+        </div>
+        <div class="resposta">
+            <p><strong>Sim, é possível.</strong> Se o imóvel estiver ocupado, você pode precisar de uma ação judicial para tomar posse — isso pode demorar meses ou até anos.</p>
+            <p><strong>Dicas importantes:</strong></p>
+            <ul>
+                <li>Visite o local antes de participar</li>
+                <li>Leia o edital com atenção — ele diz tudo sobre o imóvel</li>
+                <li>Prefira imóveis desocupados</li>
+                <li>Consulte um advogado se tiver dúvidas</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- DÚVIDA 4 -->
+    <div class="duvida">
+        <div class="pergunta" onclick="alternarResposta(this)">
+            <span>🔑 Posso financiar um imóvel de leilão?</span>
+            <span class="icone-seta">▼</span>
+        </div>
+        <div class="resposta">
+            <p><strong>Sim!</strong> Muitos leilões da Caixa e de outros bancos aceitam financiamento nas mesmas condições de um imóvel novo. Porém, alguns leilões — especialmente os judiciais — exigem o pagamento à vista.</p>
+            <p>Sempre verifique essa informação no edital antes de fazer seu lance.</p>
+        </div>
+    </div>
+
+    <!-- DÚVIDA 5 -->
+    <div class="duvida">
+        <div class="pergunta" onclick="alternarResposta(this)">
+            <span>📋 O que devo ler no edital?</span>
+            <span class="icone-seta">▼</span>
+        </div>
+        <div class="resposta">
+            <p>O edital é o documento mais importante. Confira sempre:</p>
+            <ul>
+                <li>Valor mínimo do lance</li>
+                <li>Data e horário do leilão</li>
+                <li>Forma de pagamento (à vista ou financiado)</li>
+                <li>Estado de conservação e ocupação do imóvel</li>
+                <li>Existência de dívidas</li>
+                <li>Comissão e taxas</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- DÚVIDA 6 -->
+    <div class="duvida">
+        <div class="pergunta" onclick="alternarResposta(this)">
+            <span>🔗 O Imóvel Lance Certo vende imóveis?</span>
+            <span class="icone-seta">▼</span>
+        </div>
+        <div class="resposta">
+            <p><strong>Não.</strong> Somos um guia informativo. Não realizamos leilões, não vendemos imóveis e não recebemos comissões. Nosso trabalho é organizar as informações e te direcionar para os sites oficiais onde os leilões acontecem.</p>
+            <p>Quando encontrar um imóvel que te interesse, clique em "Ver na Fonte" para ir direto ao site oficial do leiloeiro ou banco.</p>
+        </div>
+    </div>
+</div>
+
+<script>
+function alternarResposta(pergunta) {
+    const resposta = pergunta.nextElementSibling;
+    const icone = pergunta.querySelector('.icone-seta');
+
+    // Fecha todas as outras
+    document.querySelectorAll('.resposta').forEach(r => {
+        if (r !== resposta) {
+            r.classList.remove('aberta');
+            r.previousElementSibling.querySelector('.icone-seta').style.transform = 'rotate(0deg)';
+        }
+    });
+
+    // Abre ou fecha a clicada
+    resposta.classList.toggle('aberta');
+    if (resposta.classList.contains('aberta')) {
+        icone.style.transform = 'rotate(180deg)';
+    } else {
+        icone.style.transform = 'rotate(0deg)';
+    }
+}
+</script>
+
+<footer>
+    🏠 Imóvel Lance Certo — Transparência total para você encontrar seu imóvel<br>
+    © 2026 — Todos os direitos reservados | Não somos instituição financeira, apenas guia informativo
+</footer>
+
+</body>
+</html>

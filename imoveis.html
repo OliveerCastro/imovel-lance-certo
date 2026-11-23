@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imóveis Disponíveis — Imóvel Lance Certo</title>
+    <link rel="stylesheet" href="estilo.css">
+    <style>
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+        h1 { text-align: center; color: #1e40af; margin-bottom: 0.5rem; font-size: 2rem; }
+        .subtitulo { text-align: center; color: #64748b; margin-bottom: 2rem; }
+
+        /* 🔍 BARRA DE FILTROS */
+        .filtros {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            margin-bottom: 2rem;
+        }
+        .filtros h3 { color: #1e40af; margin-bottom: 1rem; font-size: 1.1rem; }
+        .grade-filtros {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        .grupo-filtro label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #475569;
+            margin-bottom: 0.4rem;
+        }
+        .grupo-filtro input,
+        .grupo-filtro select {
+            width: 100%;
+            padding: 0.65rem 0.85rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 0.95rem;
+        }
+        .botoes-filtro {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+        .btn {
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            border: none;
+            font-weight: 500;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+        .btn-aplicar { background: #3b82f6; color: white; }
+        .btn-aplicar:hover { background: #1e40af; }
+        .btn-limpar { background: #e2e8f0; color: #475569; }
+        .btn-limpar:hover { background: #cbd5e1; }
+        .btn-mostrar-favoritos { background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; }
+        .btn-mostrar-favoritos:hover { background: #fee2e2; }
+        .btn-mostrar-favoritos.ativo { background: #dc2626; color: white; }
+
+        /* 🔔 ALERTA DE PREÇO */
+        .secao-alerta {
+            background: #f0fdf4;
+            border-left: 4px solid #22c55e;
+            padding: 1.25rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+        .secao-alerta h4 { color: #166534; margin-bottom: 0.5rem; font-size: 1rem; }
+        .secao-alerta p { color: #15803d; font-size: 0.9rem; margin-bottom: 0.75rem; }
+        .form-alerta { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+        .form-alerta input {
+            flex: 1;
+            min-width: 160px;
+            padding: 0.6rem 0.85rem;
+            border: 1px solid #bbf7d0;
+            border-radius: 6px;
+            font-size: 0.9rem;
+        }
+        .btn-alerta {
+            background: #22c55e;
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn-alerta:hover { background: #16a34a; }
+        .lista-alertas { margin-top: 1rem; }
+        .item-alerta {
+            background: white;
+            padding: 0.6rem 0.85rem;
+            border-radius: 6px;
+            margin-top: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+        }
+        .btn-remover-alerta {
+            background: none;
+            border: none;
+            color: #ef4444;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+        .destaque-alerta {
+            border: 2px solid #22c55e !important;
+            box-shadow: 0 0 12px rgba(34, 197, 94, 0.15) !important;
+        }
+        .etiqueta-alerta {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: #22c55e;
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            z-index: 10;
+        }
+
+        /* 📊 ESTATÍSTICAS */
+        .estatisticas {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .card-stats {
+            background: white;
+            padding: 1.25rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+        }
+        .card-stats .valor { font-size: 1.5rem; font-weight: 700; color: #1e40af; }
+        .card-stats .rotulo { font-size: 0.85rem; color: #64748b; margin-top: 0.25rem; }
+
+        /* 📋 ORDENAÇÃO */
+        .topo-resultados {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+        .resultados-contagem { color: #475569; font-size: 0.95rem; }
+        .ordenar { display: flex; align-items: center; gap: 0.5rem; }
+        .ordenar label { font-size: 0.9rem; color: #64748b; }
+        .ordenar select {
+            padding: 0.4rem 0.7rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 5px;
+            font-size: 0.9rem;
+        }
+
+        /* 🏘️ LISTA DE IMÓVEIS */
+        .grade-imoveis {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 1.5rem;
+        }
+        .card-imovel {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.06);
+            transition: transform 0.2s, box-shadow 0.2s;
+            position: relative;
+        }
+        .card-imovel:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+        }
+        .botao-favorito-card {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.3rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            transition: all 0.2s;
+            z-index: 10;
+        }
+        .botao-favorito-card:hover { transform: scale(1.1); }
+        .botao-favorito-card.ativo { background: #fee2e2; }
+        .botao-favorito-card.ativo span { color: #dc2626; }
+
+        .imagem-ficticia {
+            height: 180px;
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+        .conteudo-card { padding: 1.25rem; }
+        .tipo-imovel {
+            display: inline-block;
+            background: #dbeafe;
+            color: #1e40af;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.25rem 0.6rem;
+            border-radius: 4px;
+            margin-bottom: 0.5rem;
+        }
+        .card-imovel h3 {
+            color: #1e293b;
+            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
+        }
+        .endereco {
+            color: #64748b;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+        }
+        .linha-valores {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 0.75rem;
+        }
+        .valor-original {
+            color: #94a3b8;
+            text-decoration: line-through;
+            font-size: 0.85rem;
+        }
+        .valor-lance {
+            color: #16a34a;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+        .etiqueta-desconto {
+            background: #fef2f2;
+            color: #dc2626;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+        }
+        .detalhes {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.85rem;
+            color: #64748b;
+            margin-bottom: 0.75rem;
+        }
+        .detalhes span { display: flex; align-items: center; gap: 0.25rem; }
+        .fonte {
+            font-size: 0.75rem;
+            color: #94a3b8;
+            padding-top: 0.75rem;
+            border-top: 1px solid #f1f5f9;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .botoes-card {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        .btn-card {
+            flex: 1;
+            padding: 0.6rem;
+            border-radius: 6px;
+            border: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            transition: background 0.2s;
+        }
+        .btn-ver { background: #3b82f6; color: white; }
+        .btn-ver:hover { background: #1e40af; }
+
+        .sem-resultados {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: #64748b;
+        }
+        .sem-resultados .icone { font-size: 4rem; margin-bottom: 1rem; opacity: 0.3; }
+
+        /* 📱 RESPONSIVO */
+        @media (max-width: 900px) {
+            .estatisticas { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 600px) {
+            .container { padding: 1rem; }
+            h1 { font-size: 1.5rem; }
+            .estatisticas { grid-template-columns: repeat(2, 1fr); }
+            .grade-imoveis { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<nav id="menu-principal">
+    <a href="/">🏠 Imóvel Lance Certo</a>
+    <a href="/imoveis.html">📋 Imóveis</a>
+    <a href="/calculadora.html">🧮 Calculadora</a>
+    <a href="/aprenda.html">📚 Aprenda</a>
+    <a href="/duvidas.html">❓ Dúvidas</a>
+    <a href="/fontes.html">🔗 Fontes</a>
+    <span id="menu-logado" style="display: none;">
+        <a href="/perfil.html" style="margin-left: auto;">👤 Meu Perfil</a>
+        <a href="#" onclick="sairDaConta(event)" style="color: #ef4444;">🚪 Sair</a>
+    </span>
+    <span id="menu-deslogado">
+        <a href="/login.html" style="margin-left: auto;">🔑 Entrar / Criar Conta</a>
+    </span>
+</nav>
+
+<script>
+// Verifica se o usuário está logado e mostra os botões corretos
+function atualizarMenu() {
+    const logado = localStorage.getItem('imc_logado');
+    document.getElementById('menu-logado').style.display = logado ? 'contents' : 'none';
+    document.getElementById('menu-deslogado').style.display = logado ? 'none' : 'contents';
+}
+
+// Função de logout
+function sairDaConta(e) {
+    e.preventDefault();
+    if (confirm('Tem certeza que deseja sair?')) {
+        localStorage.removeItem('imc_logado');
+        localStorage.removeItem('imc_novidades');
+        window.location.href = '/login.html';
+    }
+}
+
+// Atualiza o menu assim que a página carrega
+document.addEventListener('DOMContentLoaded', atualizarMenu);
+</script>
+
+
+<script>
+function sairDaConta(e) {
+    e.preventDefault();
+    if (confirm('Tem certeza que deseja sair?')) {
+        localStorage.removeItem('imc_logado');
+        window.location.href = '/login.html';
+    }
+}
+</script>
+
+
+<div class="container">
+    <h1>🏘️ Imóveis em Leilão</h1>
+    <p class="subtitulo">Encontre oportunidades com os melhores preços em todo o Brasil</p>
+
+    <!-- 🔔 ALERTA DE PREÇO -->
+    <div class="secao-alerta">
+        <h4>🔔 Quer ser avisado quando o preço cair?</h4>
+        <p>Defina seu preço ideal e os imóveis que combinarem aparecerão em destaque para você!</p>
+        <div class="form-alerta">
+            <input type="text" id="alerta-cidade" placeholder="Cidade desejada">
+            <input type="number" id="alerta-valor" placeholder="Valor máximo R$">
+            <button class="btn-alerta" onclick="salvarAlerta()">🔔 Criar Alerta</button>
+        </div>
+        <div id="lista-alertas" class="lista-alertas"></div>
+    </div>
+
+    <!-- 🔍 FILTROS -->
+    <div class="filtros">
+        <h3>🔍 Filtros de Busca</h3>
+        <div class="grade-filtros">
+            <div class="grupo-filtro">
+                <label for="busca">Buscar por cidade ou bairro</label>
+                <input type="text" id="busca" placeholder="Ex: Uberlândia, Belo Horizonte...">
+            </div>
+            <div class="grupo-filtro">
+                <label for="regiao">Região</label>
+                <select id="regiao">
+                    <option value="">Todas as regiões</option>
+                    <option value="Norte">Norte</option>
+                    <option value="Nordeste">Nordeste</option>
+                    <option value="Centro-Oeste">Centro-Oeste</option>
+                    <option value="Sudeste">Sudeste</option>
+                    <option value="Sul">Sul</option>
+                </select>
+            </div>
+            <div class="grupo-filtro">
+                <label for="tipo">Tipo de Imóvel</label>
+                <select id="tipo">
+                    <option value="">Todos os tipos</option>
+                    <option value="Apartamento">Apartamento</option>
+                    <option value="Casa">Casa</option>
+                    <option value="Sítio">Sítio</option>
+                </select>
+            </div>
+            <div class="grupo-filtro">
+                <label for="preco-max">Preço Máximo (R$)</label>
+                <input type="number" id="preco-max" placeholder="0">
+            </div>
+            <div class="grupo-filtro">
+                <label for="desconto-min">Desconto Mínimo (%)</label>
+                <input type="number" id="desconto-min" placeholder="0" min="0" max="100">
+            </div>
+        </div>
+        <div class="botoes-filtro">
+            <button class="btn btn-aplicar" onclick="aplicarFiltros()">✅ Aplicar Filtros</button>
+            <button class="btn btn-limpar" onclick="limparFiltros()">🔄 Limpar</button>
+            <button class="btn btn-mostrar-favoritos" id="btn-favoritos" onclick="alternarFavoritos()">
+                ❤️ Meus Favoritos (<span id="contador-favoritos">0</span>)
+            </button>
+        </div>
+    </div>
+
+    <!-- 📊 ESTATÍSTICAS -->
+    <div class="estatisticas">
+        <div class="card-stats">
+            <div class="valor" id="total-imoveis">0</div>
+            <div class="rotulo">Imóveis Encontrados</div>
+        </div>
+        <div class="card-stats">
+            <div class="valor" id="media-desconto">0%</div>
+            <div class="rotulo">Desconto Médio</div>
+        </div>
+        <div class="card-stats">
+            <div class="valor" id="menor-preco">R$0</div>
+            <div class="rotulo">Menor Preço</div>
+        </div>
+        <div class="card-stats">
+            <div class="valor" id="maior-desconto">0%</div>
+            <div class="rotulo">Maior Desconto</div>
+        </div>
+    </div>
+
+    <!-- 📋 ORDENAÇÃO -->
+    <div class="topo-resultados">
+        <div class="resultados-contagem" id="contagem-resultados">Carregando imóveis...</div>
+        <div class="ordenar">
+            <label>Ordenar por:</label>
+            <select id="ordenar" onchange="aplicarFiltros()">
+                <option value="padrao">Recomendado</option>
+                <option value="preco-menor">Menor Preço</option>
+                <option value="preco-maior">Maior Preço</option>
+                <option value="desconto-maior">Maior Desconto</option>
+                <option value="regiao">Região</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- 🏘️ LISTA DE IMÓVEIS -->
+    <div id="lista-imoveis" class="

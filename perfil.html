@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Perfil — Imóvel Lance Certo</title>
+    <link rel="stylesheet" href="estilo.css">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: #f8fafc; color: #1e293b; line-height: 1.6; }
+
+        .container { max-width: 800px; margin: 0 auto; padding: 2rem; }
+
+        .cabecalho-perfil {
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            border-radius: 16px;
+            padding: 2rem;
+            color: white;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .cabecalho-perfil::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            width: 120px;
+            height: 120px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+        }
+        .icone-usuario {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+        .cabecalho-perfil h1 {
+            font-size: 1.5rem;
+            margin-bottom: 0.25rem;
+            text-align: left;
+        }
+        .email-usuario {
+            opacity: 0.9;
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+        }
+        .cidade-usuario {
+            font-size: 0.9rem;
+            opacity: 0.85;
+        }
+        .etiqueta-status {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-top: 0.75rem;
+        }
+
+        .cartao {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            margin-bottom: 1.5rem;
+        }
+        .cartao h2 {
+            font-size: 1.1rem;
+            color: #1e40af;
+            margin-bottom: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .grupo-form { margin-bottom: 1rem; }
+        label {
+            display: block;
+            font-weight: 500;
+            color: #374151;
+            margin-bottom: 0.4rem;
+            font-size: 0.9rem;
+        }
+        input, select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        input:focus, select:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        input:disabled { background: #f3f4f6; color: #6b7280; cursor: not-allowed; }
+
+        .linha-botoes {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 1.25rem;
+            flex-wrap: wrap;
+        }
+        .botao {
+            padding: 0.75rem 1.25rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .botao-principal { background: #3b82f6; color: white; }
+        .botao-principal:hover { background: #1e40af; }
+        .botao-secundario { background: #e5e7eb; color: #374151; }
+        .botao-secundario:hover { background: #d1d5db; }
+        .botao-perigo { background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; }
+        .botao-perigo:hover { background: #fee2e2; }
+
+        .item-alerta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            background: #f9fafb;
+            border-radius: 6px;
+            margin-bottom: 0.5rem;
+        }
+        .info-alerta { font-size: 0.9rem; color: #374151; }
+        .remover-alerta {
+            background: none;
+            border: none;
+            color: #ef4444;
+            cursor: pointer;
+            font-size: 0.8rem;
+            padding: 0.25rem 0.5rem;
+        }
+
+        .toggle-opcao {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #f3f4f6;
+        }
+        .toggle-opcao:last-child { border-bottom: none; }
+        .toggle-opcao label { margin: 0; font-weight: normal; }
+
+        .interruptor {
+            position: relative;
+            display: inline-block;
+            width: 48px;
+            height: 26px;
+        }
+        .interruptor input { opacity: 0; width: 0; height: 0; }
+        .botao-interruptor {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #d1d5db;
+            border-radius: 13px;
+            transition: 0.3s;
+        }
+        .botao-interruptor:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            border-radius: 50%;
+            transition: 0.3s;
+        }
+        input:checked + .botao-interruptor { background-color: #22c55e; }
+        input:checked + .botao-interruptor:before { transform: translateX(22px); }
+
+        .mensagem {
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            display: none;
+        }
+        .mensagem.sucesso {
+            background: #dcfce7;
+            color: #166534;
+            border-left: 3px solid #22c55e;
+        }
+        .mensagem.erro {
+            background: #fee2e2;
+            color: #991b1b;
+            border-left: 3px solid #ef4444;
+        }
+        .mensagem.visivel { display: block; }
+
+        .area-deslogado {
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+        .area-deslogado h2 { color: #1e40af; margin-bottom: 1rem; }
+        .area-deslogado p { color: #64748b; margin-bottom: 1.5rem; }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: #64748b;
+            font-size: 0.9rem;
+            margin-top: 3rem;
+        }
+
+        @media (max-width: 600px) {
+            .container { padding: 1rem; }
+            .cabecalho-perfil { padding: 1.5rem; }
+            .linha-botoes { flex-direction: column; }
+            .botao { width: 100%; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a href="/">🏠 Imóvel Lance Certo</a>
+    <a href="/imoveis.html">📋 Imóveis</a>
+    <a href="/calculadora.html">🧮 Calculadora</a>
+    <a href="/aprenda.html">📚 Aprenda</a>
+    <a href="/duvidas.html">❓ Dúvidas</a>
+    <a href="/fontes.html">🔗 Fontes</a>
+    <a href="/perfil.html" style="margin-left:auto;">👤 Meu Perfil</a>
+    <a href="#" onclick="sairDaConta(event)" style="color:#ef4444;">🚪 Sair</a>
+</nav>
+
+<script>
+function sairDaConta(e) {
+    e.preventDefault();
+    if (confirm('Tem certeza que deseja sair?')) {
+        localStorage.removeItem('imc_logado');
+        window.location.href = '/login.html';
+    }
+}
+</script>
+
+
+<div class="container" id="conteudo-pagina">
+    <!-- Área mostrada quando NÃO está logado -->
+    <div id="deslogado" class="area-deslogado" style="display:none;">
+        <div style="font-size: 4rem; margin-bottom: 1rem;">🔒</div>
+        <h2>Você precisa estar logado</h2>
+        <p>Entre na sua conta para ver seu perfil, favoritos e alertas salvos.</p>
+        <a href="/login.html" class="botao botao-principal">Ir para a Página de Login →</a>
+    </div>
+
+    <!-- Área mostrada quando ESTÁ logado -->
+    <div id="perfil" style="display:none;">
+        <!-- CABEÇALHO -->
+        <div class="cabecalho-perfil">
+            <div class="icone-usuario">👤</div>
+            <h1 id="nome-usuario">—</h1>
+            <p class="email-usuario" id="email-usuario">—</p>
+            <p class="cidade-usuario">📍 <span id="cidade-usuario">—</span></p>
+            <span class="etiqueta-status">✅ Conta Ativa</span>
+        </div>
+
+        <!-- MENSAGEM DE FEEDBACK -->
+        <div id="mensagem" class="mensagem"></div>
+
+        <!-- DADOS PESSOAIS -->
+        <div class="cartao">
+            <h2>📝 Meus Dados</h2>
+            <div class="grupo-form">
+                <label for="editar-nome">Nome Completo</label>
+                <input type="text" id="editar-nome" placeholder="Seu nome completo">
+            </div>
+            <div class="grupo-form">
+                <label for="editar-email">E-mail</label>
+                <input type="email" id="editar-email" disabled style="background: #f3f4f6; cursor: not-allowed;">
+                <small style="color: #6b7280; font-size: 0.8rem;">O e-mail não pode ser alterado</small>
+            </div>
+            <div class="grupo-form">
+                <label for="editar-cidade">Cidade</label>
+                <input type="text" id="editar-cidade" placeholder="Sua cidade">
+            </div>
+            <div class="linha-botoes">
+                <button class="botao botao-principal" onclick="salvarDados()">💾 Salvar Alterações</button>
+            </div>
+        </div>
+
+        <!-- MINHAS PREFERÊNCIAS -->
+        <div class="cartao">
+            <h2>⚙️ Minhas Preferências</h2>
+            <div class="toggle-opcao">
+                <label for="receber-alertas">🔔 Receber alertas de preço por e-mail</label>
+                <label class="interruptor">
+                    <input type="checkbox" id="receber-alertas">
+                    <span class="botao-interruptor"></span>
+                </label>
+            </div>
+            <div class="toggle-opcao">
+                <label for="receber-novidades">📧 Receber novidades e dicas sobre leilões</label>
+                <label class="interruptor">
+                    <input type="checkbox" id="receber-novidades">
+                    <span class="botao-interruptor"></span>
+                </label>
+            </div>
+            <div class="toggle-opcao">
+                <label for="modo-escuro">🌙 Modo escuro (em breve)</label>
+                <label class="interruptor">
+                    <input type="checkbox" id="modo-escuro" disabled>
+                    <span class="botao-interruptor" style="background: #e5e7eb;"></span>
+                </label>
+            </div>
+            <div class="linha-botoes">
+                <button class="botao botao-principal" onclick="salvarPreferencias()">💾 Salvar Preferências</button>
+            </div>
+        </div>
+
+        <!-- MEUS ALERTAS -->
+        <div class="cartao">
+            <h2>🔔 Meus Alertas</h2>
+            <p style="color: #64748b; font-size: 0.9rem; margin-bottom: 1rem;">
+                Você será avisado quando aparecerem imóveis com esses critérios
+            </p>
+            <div id="lista-meus-alertas">
+                <p style="color: #94a3b8; font-size: 0.9rem; font-style: italic;">
+                    Você ainda não criou nenhum alerta. Vá na página de
+                    <a href="/imoveis.html" style="color: #3b82f6;">Imóveis</a> e crie um!
+                </p>
+            </div>
+        </div>
+
+        <!-- MEUS FAVORITOS -->
+        <div class="cartao">
+            <h2>❤️ Meus Favoritos</h2>
+            <p style="color: #64748b; font-size: 0.9rem; margin-bottom: 1rem;">
+                Imóveis que você salvou para acompanhar
+            </p>
+            <div id="lista-meus-favoritos">
+                <p style="color: #94a3b8; font-size: 0.9rem; font-style: italic;">
+                    Você ainda não salvou nenhum imóvel como favorito.
+                    <a href="/imoveis.html" style="color: #3b82f6;">Veja os imóveis disponíveis →</a>
+                </p>
+            </div>
+        </div>
+
+        <!-- SEGURANÇA -->
+        <div class="cartao">
+            <h2>🔐 Segurança da Conta</h2>
+            <div class="grupo-form">
+                <label for="senha-atual">Senha Atual</label>
+                <input type="password" id="senha-atual" placeholder="Digite sua senha atual">
+            </div>
+            <div class="grupo-form">
+                <label for="nova-senha">Nova Senha (mínimo 6 caracteres)</label>
+                <input type="password" id="nova-senha" placeholder="Mínimo 6 caracteres">
+            </div>
+            <div class="grupo-form">
+                <label for="confirma-nova-senha">Confirmar Nova Senha</label>
+                <input type="password" id="confirma-nova-senha" placeholder="Digite a nova senha novamente">
+            </div>
+            <div class="linha-botoes">
+                <button class="botao botao-principal" onclick="alterarSenha()">🔑 Alterar Senha</button>
+            </div>
+        </div>
+
+        <!-- OPÇÕES DA CONTA -->
+        <div class="cartao">
+            <h2>🚪 Sair ou Excluir Conta</h2>
+            <p style="color: #64748b; font-size: 0.9rem; margin-bottom: 1rem;">
+                Encerre sua sessão ou exclua permanentemente seus dados
+            </p>
+            <div class="linha-botoes">
+                <button class="botao botao-secundario" onclick="sairDaConta()">🚪 Sair da Conta</button>
+                <button class="botao botao-perigo" onclick="excluirConta()">🗑️ Excluir Minha Conta</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    🏠 Imóvel Lance Certo — Transparência total para você encontrar seu imóvel<br>
+    © 2026 — Todos os direitos reservados | Não somos instituição financeira, apenas guia informativo
+</footer>
+
+<script>
+// 📦 FUNÇÕES DE ARMAZENAMENTO
+function getUsuarios() {
+    return JSON.parse(localStorage.getItem('imc_usuarios') || '[]');
+}
+function salvarUsuarios(usuarios) {
+    localStorage.setItem('imc_usuarios', JSON.stringify(usuarios));
+}
+function getUsuarioLogado() {
+    return JSON.parse(localStorage.getItem('imc_logado') || 'null');
+}
+function salvarSessao(usuario) {
+    localStorage.setItem('imc_logado', JSON.stringify(usuario));
+}
+function encerrarSessao() {
+    localStorage.removeItem('imc_logado');
+}
+
+// 💬 MENSAGENS
+function mostrarMensagem(texto, tipo) {
+    const caixa = document.getElementById('mensagem');
+    caixa.textContent = texto;
+    caixa.className = 'mensagem ' + tipo + ' visivel';
+    setTimeout(() => { caixa.className = 'mensagem'; }, 4000);
+}
+
+// 🔍 VERIFICAR LOGIN AO CARREGAR
+let usuarioLogado = null;
+window.onload = function() {
+    usuarioLogado = getUsuarioLogado();
+
+    if (!usuarioLogado) {
+        document.getElementById('deslogado').style.display = 'block';
+        return;
+    }
+
+    // Mostrar área do perfil
+    document.getElementById('deslogado').style.display = 'none';
+    document.getElementById('perfil').style.display = 'block';
+
+    // Preencher dados do usuário
+    document.getElementById('nome-usuario').textContent = usuarioLogado.n
+ado.nome;
+    document.getElementById('email-usuario').textContent = usuarioLogado.email;
+    document.getElementById('cidade-usuario').textContent = usuarioLogado.cidade;
+
+    // Preencher campos editáveis
+    document.getElementById('editar-nome').value = usuarioLogado.nome;
+    document.getElementById('editar-email').value = usuarioLogado.email;
+    document.getElementById('editar-cidade').value = usuarioLogado.cidade;
+
+    // Preferências
+    document.getElementById('receber-alertas').checked = usuarioLogado.alertasEmail || false;
+    document.getElementById('receber-novidades').checked = localStorage.getItem('imc_novidades') === 'sim';
+
+    // Carregar alertas e favoritos
+    carregarMeusAlertas();
+    carregarMeusFavoritos();
+};
+
+// 💾 SALVAR DADOS PESSOAIS
+function salvarDados() {
+    const nome = document.getElementById('editar-nome').value.trim();
+    const cidade = document.getElementById('editar-cidade').value.trim();
+
+    if (!nome || !cidade) {
+        mostrarMensagem('⚠️ Preencha todos os campos', 'erro');
+        return;
+    }
+
+    const usuarios = getUsuarios();
+    const indice = usuarios.findIndex(u => u.email === usuarioLogado.email);
+
+    if (indice !== -1) {
+        usuarios[indice].nome = nome;
+        usuarios[indice].cidade = cidade;
+        salvarUsuarios(usuarios);
+
+        // Atualizar sessão
+        usuarioLogado.nome = nome;
+        usuarioLogado.cidade = cidade;
+        salvarSessao(usuarioLogado);
+
+        // Atualizar na tela
+        document.getElementById('nome-usuario').textContent = nome;
+        document.getElementById('cidade-usuario').textContent = cidade;
+
+        mostrarMensagem('✅ Dados salvos com sucesso!', 'sucesso');
+    }
+}
+
+// ⚙️ SALVAR PREFERÊNCIAS
+function salvarPreferencias() {
+    const alertasEmail = document.getElementById('receber-alertas').checked;
+    const novidades = document.getElementById('receber-novidades').checked;
+
+    localStorage.setItem('imc_novidades', novidades ? 'sim' : 'nao');
+
+    const usuarios = getUsuarios();
+    const indice = usuarios.findIndex(u => u.email === usuarioLogado.email);
+    if (indice !== -1) {
+        usuarios[indice].alertasEmail = alertasEmail;
+        salvarUsuarios(usuarios);
+        usuarioLogado.alertasEmail = alertasEmail;
+        salvarSessao(usuarioLogado);
+    }
+
+    console.log(`📧 [Preferências] Alertas por e-mail: ${alertasEmail ? 'ATIVADO' : 'DESATIVADO'} | Novidades: ${novidades ? 'ATIVADO' : 'DESATIVADO'}`);
+    mostrarMensagem('✅ Preferências salvas!', 'sucesso');
+}
+
+// 🔔 CARREGAR MEUS ALERTAS
+function carregarMeusAlertas() {
+    const alertas = JSON.parse(localStorage.getItem('alertas') || '[]');
+    const container = document.getElementById('lista-meus-alertas');
+
+    if (alertas.length === 0) {
+        container.innerHTML = `<p style="color: #94a3b8; font-size: 0.9rem; font-style: italic;">
+            Você ainda não criou nenhum alerta. Vá na página de
+            <a href="/imoveis.html" style="color: #3b82f6;">Imóveis</a> e crie um!
+        </p>`;
+        return;
+    }
+
+    container.innerHTML = alertas.map((a, i) => `
+        <div class="item-alerta">
+            <span class="info-alerta">📍 ${a.cidade} — até R$ ${a.valor.toLocaleString('pt-BR')}</span>
+            <button class="remover-alerta" onclick="removerAlerta(${i})">✕ Remover</button>
+        </div>
+    `).join('');
+}
+
+function removerAlerta(indice) {
+    const alertas = JSON.parse(localStorage.getItem('alertas') || '[]');
+    alertas.splice(indice, 1);
+    localStorage.setItem('alertas', JSON.stringify(alertas));
+    carregarMeusAlertas();
+    mostrarMensagem('✅ Alerta removido!', 'sucesso');
+}
+
+// ❤️ CARREGAR MEUS FAVORITOS
+function carregarMeusFavoritos() {
+    const favoritos = JSON.parse(localStorage.getItem('favoritos') || '[]');
+    const container = document.getElementById('lista-meus-favoritos');
+
+    if (favoritos.length === 0) {
+        container.innerHTML = `<p style="color: #94a3b8; font-size: 0.9rem; font-style: italic;">
+            Você ainda não salvou nenhum imóvel como favorito.
+            <a href="/imoveis.html" style="color: #3b82f6;">Veja os imóveis disponíveis →</a>
+        </p>`;
+        return;
+    }
+
+    container.innerHTML = favoritos.map((f, i) => `
+        <div class="item-alerta">
+            <span class="info-alerta">🏠 ${f.tipo} — ${f.cidade}</span>
+            <button class="remover-alerta" onclick="removerFavorito(${i})">✕ Remover</button>
+        </div>
+    `).join('');
+}
+
+function removerFavorito(indice) {
+    const favoritos = JSON.parse(localStorage.getItem('favoritos') || '[]');
+    favoritos.splice(indice, 1);
+    localStorage.setItem('favoritos', JSON.stringify(favoritos));
+    carregarMeusFavoritos();
+    mostrarMensagem('✅ Removido dos favoritos!', 'sucesso');
+}
+
+// 🔑 ALTERAR SENHA
+function alterarSenha() {
+    const senhaAtual = document.getElementById('senha-atual').value;
+    const novaSenha = document.getElementById('nova-senha').value;
+    const confirmaSenha = document.getElementById('confirma-nova-senha').value;
+
+    if (!senhaAtual || !novaSenha || !confirmaSenha) {
+        mostrarMensagem('⚠️ Preencha todos os campos', 'erro');
+        return;
+    }
+
+    if (novaSenha.length < 6) {
+        mostrarMensagem('⚠️ A nova senha deve ter pelo menos 6 caracteres', 'erro');
+        return;
+    }
+
+    if (novaSenha !== confirmaSenha) {
+        mostrarMensagem('⚠️ As senhas não coincidem', 'erro');
+        return;
+    }
+
+    const usuarios = getUsuarios();
+    const indice = usuarios.findIndex(u => u.email === usuarioLogado.email);
+
+    if (indice === -1 || usuarios[indice].senha !== senhaAtual) {
+        mostrarMensagem('❌ Senha atual incorreta', 'erro');
+        return;
+    }
+
+    usuarios[indice].senha = novaSenha;
+    salvarUsuarios(usuarios);
+
+    // Limpar campos
+    document.getElementById('senha-atual').value = '';
+    document.getElementById('nova-senha').value = '';
+    document.getElementById('confirma-nova-senha').value = '';
+
+    mostrarMensagem('✅ Senha alterada com sucesso!', 'sucesso');
+    console.log(`🔑 Senha alterada para: ${usuarioLogado.email}`);
+}
+
+// 🚪 SAIR DA CONTA
+function sairDaConta() {
+    if (confirm('Tem certeza que deseja sair da sua conta?')) {
+        encerrarSessao();
+        window.location.href = '/login.html';
+    }
+}
+
+// 🗑️ EXCLUIR CONTA
+function excluirConta() {
+    if (!confirm('⚠️ ATENÇÃO: Isso excluirá todos os seus dados permanentemente. Tem certeza?')) {
+        return;
+    }
+    if (!confirm('Tem CERTEZA absoluta? Esta ação não pode ser desfeita!')) {
+        return;
+    }
+
+    const usuarios = getUsuarios().filter(u => u.email !== usuarioLogado.email);
+    salvarUsuarios(usuarios);
+    encerrarSessao();
+
+    alert('Sua conta foi excluída. Obrigado por ter feito parte do Imóvel Lance Certo!');
+    window.location.href = '/';
+}
+</script>
+
+</body>
+</html>

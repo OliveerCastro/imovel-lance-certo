@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entrar — Imóvel Lance Certo</title>
+    <link rel="stylesheet" href="estilo.css">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        body {
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        nav { flex-shrink: 0; }
+
+        .caixa-login {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            width: 100%;
+            max-width: 420px;
+            padding: 2.5rem;
+            margin: 3rem auto;
+        }
+        .caixa-login h1 {
+            text-align: center;
+            color: #1e40af;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .subtitulo {
+            text-align: center;
+            color: #64748b;
+            font-size: 0.95rem;
+            margin-bottom: 2rem;
+        }
+
+        .aba {
+            display: flex;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .aba button {
+            flex: 1;
+            padding: 0.75rem;
+            background: none;
+            border: none;
+            font-size: 1rem;
+            font-weight: 500;
+            color: #94a3b8;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+        }
+        .aba button.ativo {
+            color: #1e40af;
+            border-bottom-color: #3b82f6;
+        }
+        .aba button:hover { color: #64748b; }
+
+        .grupo { margin-bottom: 1.25rem; }
+        label {
+            display: block;
+            font-weight: 500;
+            color: #374151;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        .input-com-icone { position: relative; }
+        .input-com-icone span {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+        }
+        input {
+            width: 100%;
+            padding: 0.85rem 1rem 0.85rem 2.5rem;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .botao {
+            width: 100%;
+            padding: 0.9rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+        }
+        .botao:active { transform: scale(0.98); }
+        .botao-principal {
+            background: #3b82f6;
+            color: white;
+        }
+        .botao-principal:hover { background: #1e40af; }
+
+        .link {
+            text-align: center;
+            margin-top: 1.25rem;
+            font-size: 0.9rem;
+        }
+        .link a {
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .link a:hover { text-decoration: underline; }
+
+        .mensagem {
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            display: none;
+        }
+        .mensagem.erro {
+            background: #fee2e2;
+            color: #991b1b;
+            border-left: 3px solid #ef4444;
+        }
+        .mensagem.sucesso {
+            background: #dcfce7;
+            color: #166534;
+            border-left: 3px solid #22c55e;
+        }
+        .mensagem.visivel { display: block; }
+
+        .rodape {
+            text-align: center;
+            color: rgba(255,255,255,0.7);
+            font-size: 0.85rem;
+            padding: 2rem;
+            margin-top: auto;
+        }
+
+        @media (max-width: 480px) {
+            .caixa-login {
+                margin: 1rem;
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a href="/">🏠 Imóvel Lance Certo</a>
+    <a href="/imoveis.html">📋 Imóveis</a>
+    <a href="/calculadora.html">🧮 Calculadora</a>
+    <a href="/aprenda.html">📚 Aprenda</a>
+    <a href="/duvidas.html">❓ Dúvidas</a>
+    <a href="/fontes.html">🔗 Fontes</a>
+</nav>
+
+
+<script>
+function sairDaConta(e) {
+    e.preventDefault();
+    if (confirm('Tem certeza que deseja sair?')) {
+        localStorage.removeItem('imc_logado');
+        window.location.href = '/login.html';
+    }
+}
+</script>
+
+
+<div class="caixa-login">
+    <h1>👋 Bem-vindo(a)!</h1>
+    <p class="subtitulo">Entre ou crie sua conta para salvar favoritos e receber alertas</p>
+
+    <div class="aba">
+        <button id="botao-entrar" class="ativo" onclick="mudarAba('entrar')">Entrar</button>
+        <button id="botao-cadastrar" onclick="mudarAba('cadastrar')">Criar Conta</button>
+    </div>
+
+    <div id="mensagem" class="mensagem"></div>
+
+    <!-- FORMULÁRIO ENTRAR -->
+    <div id="form-entrar">
+        <form onsubmit="fazerLogin(event)">
+            <div class="grupo">
+                <label for="email-entrar">Seu E-mail</label>
+                <div class="input-com-icone">
+                    <span>📧</span>
+                    <input type="email" id="email-entrar" placeholder="seu@email.com" required>
+                </div>
+            </div>
+            <div class="grupo">
+                <label for="senha-entrar">Sua Senha</label>
+                <div class="input-com-icone">
+                    <span>🔒</span>
+                    <input type="password" id="senha-entrar" placeholder="••••••••" required>
+                </div>
+            </div>
+            <button type="submit" class="botao botao-principal">Entrar na Conta →</button>
+        </form>
+        <div class="link">
+            <a href="#" onclick="mostrarRecuperar(event)">Esqueceu sua senha?</a>
+        </div>
+    </div>
+
+    <!-- FORMULÁRIO CADASTRAR -->
+    <div id="form-cadastrar" style="display:none;">
+        <form onsubmit="fazerCadastro(event)">
+            <div class="grupo">
+                <label for="nome-cadastrar">Seu Nome Completo</label>
+                <div class="input-com-icone">
+                    <span>👤</span>
+                    <input type="text" id="nome-cadastrar" placeholder="Digite seu nome" required>
+                </div>
+            </div>
+            <div class="grupo">
+                <label for="email-cadastrar">Seu E-mail</label>
+                <div class="input-com-icone">
+                    <span>📧</span>
+                    <input type="email" id="email-cadastrar" placeholder="seu@email.com" required>
+                </div>
+            </div>
+            <div class="grupo">
+                <label for="cidade-cadastrar">Sua Cidade</label>
+                <div class="input-com-icone">
+                    <span>📍</span>
+                    <input type="text" id="cidade-cadastrar" placeholder="Sua cidade" required>
+                </div>
+            </div>
+            <div class="grupo">
+                <label for="senha-cadastrar">Criar Senha (mínimo 6 caracteres)</label>
+                <div class="input-com-icone">
+                    <span>🔒</span>
+                    <input type="password" id="senha-cadastrar" placeholder="Mínimo 6 caracteres" required minlength="6">
+                </div>
+            </div>
+            <div class="grupo">
+                <label for="confirmar-senha">Confirmar Senha</label>
+                <div class="input-com-icone">
+                    <span>🔒</span>
+                    <input type="password" id="confirmar-senha" placeholder="Digite a senha novamente" required>
+                </div>
+            </div>
+            <div class="grupo" style="display:flex; align-items:flex-start; gap:0.5rem;">
+                <input type="checkbox" id="alertas-email" style="width:auto; margin-top:0.2rem;">
+                <label for="alertas-email" style="margin:0; font-weight:normal; font-size:0.85rem;">Quero receber alertas de preço e novidades por e-mail</label>
+            </div>
+            <button type="submit" class="botao botao-principal">Criar Minha Conta ✅</button>
+        </form>
+    </div>
+
+    <!-- RECUPERAR SENHA -->
+    <div id="form-recuperar" style="display:none;">
+        <form onsubmit="enviarRecuperacao(event)">
+            <div class="grupo">
+                <label for="email-recuperar">Seu E-mail de Cadastro</label>
+                <div class="input-com-icone">
+                    <span>📧</span>
+                    <input type="email" id="email-recuperar" placeholder="seu@email.com" required>
+                </div>
+            </div>
+            <button type="submit" class="botao botao-principal">Enviar Instruções 📧</button>
+        </form>
+        <div class="link">
+            <a href="#" onclick="mudarAba('entrar'); return false;">← Voltar para entrar</a>
+        </div>
+    </div>
+</div>
+
+<div class="rodape">
+    🏠 Imóvel Lance Certo — Transparência total para você encontrar seu imóvel<br>
+    © 2026 — Todos os direitos reservados
+</div>
+
+<script>
+// 📦 FUNÇÕES DE ARMAZENAMENTO
+function getUsuarios() {
+    return JSON.parse(localStorage.getItem('imc_usuarios') || '[]');
+}
+function salvarUsuarios(usuarios) {
+    localStorage.setItem('imc_usuarios', JSON.stringify(usuarios));
+}
+function getUsuarioLogado() {
+    return JSON.parse(localStorage.getItem('imc_logado') || 'null');
+}
+function salvarSessao(usuario) {
+    localStorage.setItem('imc_logado', JSON.stringify(usuario));
+}
+function encerrarSessao() {
+    localStorage.removeItem('imc_logado');
+}
+
+// 🔄 ALTERNAR ABAS
+function mudarAba(tipo) {
+    document.getElementById('form-entrar').style.display = tipo === 'entrar' ? 'block' : 'none';
+    document.getElementById('form-cadastrar').style.display = tipo === 'cadastrar' ? 'block' : 'none';
+    document.getElementById('form-recuperar').style.display = tipo === 'recuperar' ? 'block' : 'none';
+
+    document.getElementById('botao-entrar').classList.toggle('ativo', tipo === 'entrar');
+    document.getElementById('botao-cadastrar').classList.toggle('ativo', tipo === 'cadastrar');
+
+    esconderMensagem();
+}
+
+function mostrarRecuperar(e) {
+    e.preventDefault();
+    mudarAba('recuperar');
+}
+
+// 💬 MENSAGENS
+function mostrarMensagem(texto, tipo) {
+    const caixa = document.getElementById('mensagem');
+    caixa.textContent = texto;
+    caixa.className = 'mensagem ' + tipo + ' visivel';
+}
+function esconderMensagem() {
+    document.getElementById('mensagem').className = 'mensagem';
+}
+
+// 🔐 LOGIN
+function fazerLogin(e) {
+    e.preventDefault();
+    const email = document.getElementById('email-entrar').value.trim();
+    const senha = document.getElementById('senha-entrar').value;
+
+    const usuarios = getUsuarios();
+    const usuario = usuarios.find(u => u.email === email && u.senha === senha);
+
+    if (usuario) {
+        salvarSessao({ nome: usuario.nome, email: usuario.email, cidade: usuario.cidade, alertasEmail: usuario.alertasEmail });
+        mostrarMensagem(`✅ Bem-vindo de volta, ${usuario.nome}!`, 'sucesso');
+        setTimeout(() => { window.location.href = '/imoveis.html'; }, 1200);
+    } else {
+        mostrarMensagem('❌ E-mail ou senha incorretos. Verifique e tente novamente.', 'erro');
+    }
+}
+
+// 📝 CADASTRO
+function fazerCadastro(e) {
+    e.preventDefault();
+    const nome = document.getElementById('nome-cadastrar').value.trim();
+    const email = document.getElementById('email-cadastrar').value.trim();
+    const cidade = document.getElementById('cidade-cadastrar').value.trim();
+    const senha = document.getElementById('senha-cadastrar').value;
+    const confirmar = document.getElementById('confirmar-senha').value;
+    const alertasEmail = document.getElementById('alertas-email').checked;
+
+    if (senha.length < 6) {
+        mostrarMensagem('⚠️ A senha deve ter pelo menos 6 caracteres.', 'erro');
+        return;
+    }
+    if (senha !== confirmar) {
+        mostrarMensagem('⚠️ As senhas não coincidem. Digite iguais nos dois campos.', 'erro');
+        return;
+    }
+
+    const usuarios = getUsuarios();
+    if (usuarios.find(u => u.email === email)) {
+        mostrarMensagem('⚠️ Este e-mail já está cadastrado. Tente fazer login.', 'erro');
+        return;
+    }
+
+    const novoUsuario = { nome, email, cidade, senha, alertasEmail, dataCadastro: new Date().toISOString() };
+    usuarios.push(novoUsuario);
+    salvarUsuarios(usuarios);
+    salvarSessao({ nome, email, cidade, alertasEmail });
+
+    mostrarMensagem(`✅ Conta criada com sucesso! Bem-vindo(a), ${nome}!`, 'sucesso');
+
+    // 📧 SIMULAÇÃO DE NOTIFICAÇÃO DE BOAS-VINDAS
+    if (alertasEmail) {
+        console.log(`📧 [SIMULAÇÃO] E-mail enviado para ${email}: Olá ${nome}! Bem-vindo ao Imóvel Lance Certo. Você receberá alertas de preço por e-mail conforme configurado.`);
+    }
+
+    setTimeout(() => { window.location.href = '/imoveis.html'; }, 1500);
+}
+
+// 🔑 RECUPERAR SENHA
+function enviarRecuperacao(e) {
+    e.preventDefault();
+    const email = document.getElementById('email-recuperar').value.trim();
+    const usuarios = getUsuarios();
+
+    if (!usuarios.find(u => u.email === email)) {
+        mostrarMensagem('⚠️ Este e-mail não foi encontrado em nosso sistema.', 'erro');
+        return;
+    }
+
+    mostrarMensagem(`📧 Se este fosse um sistema ativo, enviariamos um link de recuperação para: ${email}`, 'sucesso');
+    console.log(`📧 [SIMULAÇÃO] Link de recuperação enviado para ${email}`);
+}
+
+// ✅ VERIFICAR SE JÁ ESTÁ LOGADO
+window.onload = function() {
+    const logado = getUsuarioLogado();
+    if (logado) {
+        mostrarMensagem(`✅ Você já está logado como ${logado.nome}`, 'sucesso');
+        setTimeout(() => { window.location.href = '/imoveis.html'; }, 1500);
+    }
+};
+</script>
+
+</body>
+</html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fontes Oficiais — Imóvel Lance Certo</title>
+    <link rel="stylesheet" href="estilo.css">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: #f8fafc; color: #1e293b; line-height: 1.6; }
+
+        .container { max-width: 900px; margin: 0 auto; padding: 2rem; }
+        h1 { text-align: center; color: #1e40af; font-size: 2rem; margin-bottom: 0.5rem; }
+        .subtitulo { text-align: center; color: #64748b; margin-bottom: 3rem; }
+
+        .aviso-seguranca {
+            background: #fffbeb;
+            border-left: 4px solid #f59e0b;
+            padding: 1rem 1.25rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+        .aviso-seguranca h4 { color: #92400e; margin-bottom: 0.5rem; }
+        .aviso-seguranca p { color: #78350f; font-size: 0.9rem; }
+
+        .card-fonte {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            margin-bottom: 1rem;
+            transition: transform 0.2s;
+        }
+        .card-fonte:hover { transform: translateY(-2px); }
+        .card-fonte h3 { color: #1e40af; font-size: 1.1rem; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
+        .card-fonte p { color: #64748b; font-size: 0.9rem; margin-bottom: 0.75rem; }
+        .card-fonte a {
+            display: inline-block;
+            background: #3b82f6;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+        .card-fonte a:hover { background: #1e40af; }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: #64748b;
+            font-size: 0.9rem;
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+
+<nav id="menu-principal">
+    <a href="/">🏠 Imóvel Lance Certo</a>
+    <a href="/imoveis.html">📋 Imóveis</a>
+    <a href="/calculadora.html">🧮 Calculadora</a>
+    <a href="/aprenda.html">📚 Aprenda</a>
+    <a href="/duvidas.html">❓ Dúvidas</a>
+    <a href="/fontes.html">🔗 Fontes</a>
+    <span id="menu-logado" style="display: none;">
+        <a href="/perfil.html" style="margin-left: auto;">👤 Meu Perfil</a>
+        <a href="#" onclick="sairDaConta(event)" style="color: #ef4444;">🚪 Sair</a>
+    </span>
+    <span id="menu-deslogado">
+        <a href="/login.html" style="margin-left: auto;">🔑 Entrar / Criar Conta</a>
+    </span>
+</nav>
+
+<script>
+// Verifica se o usuário está logado e mostra os botões corretos
+function atualizarMenu() {
+    const logado = localStorage.getItem('imc_logado');
+    document.getElementById('menu-logado').style.display = logado ? 'contents' : 'none';
+    document.getElementById('menu-deslogado').style.display = logado ? 'none' : 'contents';
+}
+
+// Função de logout
+function sairDaConta(e) {
+    e.preventDefault();
+    if (confirm('Tem certeza que deseja sair?')) {
+        localStorage.removeItem('imc_logado');
+        localStorage.removeItem('imc_novidades');
+        window.location.href = '/login.html';
+    }
+}
+
+// Atualiza o menu assim que a página carrega
+document.addEventListener('DOMContentLoaded', atualizarMenu);
+</script>
+
+
+<script>
+function sairDaConta(e) {
+    e.preventDefault();
+    if (confirm('Tem certeza que deseja sair?')) {
+        localStorage.removeItem('imc_logado');
+        window.location.href = '/login.html';
+    }
+}
+</script>
+
+
+<div class="container">
+    <h1>🔗 Fontes Oficiais</h1>
+    <p class="subtitulo">Acesse diretamente os sites confiáveis onde os leilões acontecem</p>
+
+    <div class="aviso-seguranca">
+        <h4>⚠️ Dica de Segurança</h4>
+        <p>Sempre confira se você está no site oficial. Nunca envie dinheiro ou dados pessoais por links de mensagens. Acesse sempre pelos endereços abaixo.</p>
+    </div>
+
+    <!-- CAIXA ECONÔMICA FEDERAL -->
+    <div class="card-fonte">
+        <h3>🏦 Caixa Econômica Federal</h3>
+        <p>A Caixa é uma das maiores fontes de leilões de imóveis no Brasil. São imóveis retomados de financiamentos habitacionais.</p>
+        <a href="https://leiloes.caixa.gov.br" target="_blank">Acessar site oficial →</a>
+    </div>
+
+    <!-- BRADESCO -->
+    <div class="card-fonte">
+        <h3>🏦 Bradesco</h3>
+        <p>Seção de leilões do Banco Bradesco com imóveis de diversos tipos em todo o território nacional.</p>
+        <a href="https://www.bradesco.com.br/para-voce/credito-e-financiamento/leiloes.html" target="_blank">Acessar site oficial →</a>
+    </div>
+
+    <!-- SANTANDER -->
+    <div class="card-fonte">
+        <h3>🏦 Santander</h3>
+        <p>Plataforma de leilões do Banco Santander com filtros por região, tipo e valor.</p>
+        <a href="https://www.santander.com.br/leiloes" target="_blank">Acessar site oficial →</a>
+    </div>
+
+    <!-- JUSTIÇA DO TRABALHO -->
+    <div class="card-fonte">
+        <h3>⚖️ Justiça do Trabalho — TST</h3>
+        <p>Leilões judiciais realizados pela Justiça do Trabalho. Sempre consulte o edital completo antes de participar.</p>
+        <a href="https://www.tst.jus.br/leiloes" target="_blank">Acessar site oficial →</a>
+    </div>
+
+    <!-- JUSTIÇA FEDERAL -->
+    <div class="card-fonte">
+        <h3>🏛️ Justiça Federal — CJF</h3>
+        <p>Leilões de imóveis de processos federais. Acompanhe os leilões nos Tribunais Regionais Federais da sua região.</p>
+        <a href="https://www.cjf.jus.br" target="_blank">Acessar site oficial →</a>
+    </div>
+
+</div>
+
+<footer>
+    🏠 Imóvel Lance Certo — Transparência total para você encontrar seu imóvel<br>
+    © 2026 — Todos os direitos reservados | Não somos instituição financeira, apenas guia informativo
+</footer>
+
+</body>
+</html>
