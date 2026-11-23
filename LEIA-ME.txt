@@ -1,12 +1,65 @@
+# 🏠 Imóvel Lance Certo
+
+> Plataforma gratuita e transparente para quem quer comprar imóveis em leilão com segurança.
+
+---
+
+## 📋 Sobre o Projeto
+
+O **Imóvel Lance Certo** nasceu para ajudar pessoas que **não conhecem leilões** a encontrar, entender e acompanhar imóveis disponíveis, sem complicações ou jargões confusos.
+
+Nosso objetivo é simples: **dar informação clara** para que você tome decisões com confiança. Não somos banco, não vendemos imóveis — somos seu guia confiável. ✅
+
+---
+
+## ✨ Funcionalidades
+
+### 🏠 Para todos os visitantes
+- 📋 **Lista de imóveis** — com filtros por região, valor e tipo
+- 📊 **Acompanhamento de valores** — veja quedas e altas de preço
+- 🧮 **Calculadora de custos** — descubra o valor total (inclui taxas, impostos e comissões)
+- 📚 **Guia completo** — passo a passo de como funciona um leilão
+- ❓ **Dúvidas frequentes** — respostas para as perguntas mais comuns
+- 🔗 **Fontes oficiais** — links diretos para os leilões dos bancos e da Justiça
+
+### 🔐 Para usuários cadastrados
+- ❤️ **Favoritos** — salve os imóveis que mais te interessam
+- 🔔 **Alertas de preço** — seja avisado quando o valor cair ou aparecer novas oportunidades
+- 👤 **Perfil pessoal** — gerencie seus dados, preferências e senha
+- 📧 **Notificações** — receba avisos importantes por e-mail
+
+---
+
+## 🛠️ Tecnologias
+
+| Tecnologia | Para que serve |
+|------------|----------------|
+| **HTML5** | Estrutura das páginas |
+| **CSS3** | Design e aparência |
+| **JavaScript** | Interatividade e armazenamento de dados locais |
+| **Python** | Servidor local e simulação de dados |
+
+---
+
+## 🚀 Como usar
+
+### 💻 Rodar localmente
+1. Baixe todos os arquivos
+2. Execute no terminal:
+   ```bash
+   python servidor.py
+
+
+
 =====================================================
-          🏠 LEILÕES FÁCEIS — Projeto Completo
+          🏠 Imóvel Lance Certo — Projeto Completo
 =====================================================
 
 ✅ O QUE VOCÊ PRECISA TER INSTALADO:
    - Python 3 (já vem na maioria dos computadores)
 
 📁 ESTRUTURA DO PROJETO:
-   leiloes_facil/
+   imovel-lance-certo/
    ├── servidor.py       ← Execute este arquivo!
    ├── index.html        ← Página inicial
    ├── imoveis.html      ← Lista de imóveis + gráficos
